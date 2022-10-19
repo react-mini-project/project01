@@ -12,7 +12,7 @@ export const __getTodo = createAsyncThunk(
     "todo/getTodo",
     async (payload, thunkAPI) => {
         try {
-            const data = await axios.get(`/todos/${payload}`);
+            const data = await axios.get(`https://shrouded-badlands-79466.herokuapp.com/todos/${payload}`);
             return thunkAPI.fulfillWithValue(data.data);
         } catch (error) {
             return thunkAPI.rejectWithValue(error);
@@ -23,7 +23,7 @@ export const __patchTodo = createAsyncThunk(
     "todos/patchTodo",
     async (payload, thunkAPI) => {
       try {
-        await axios.patch(`/todos/${payload.id}`, payload);
+        await axios.patch(`https://shrouded-badlands-79466.herokuapp.com/todos/${payload.id}`, payload);
         return thunkAPI.fulfillWithValue(payload);
       } catch (error) {
         return thunkAPI.rejectWithValue(error);
