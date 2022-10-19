@@ -12,7 +12,7 @@ export const __getTodos = createAsyncThunk(
   "todos/getTodos",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get("http://localhost:3001/todos");
+      const data = await axios.get("/todos");
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -24,7 +24,7 @@ export const __addTodo = createAsyncThunk(
   "todos/addTodo",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.post("http://localhost:3001/todos", payload);
+      const data = await axios.post("/todos", payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -36,7 +36,7 @@ export const __deleteTodo = createAsyncThunk(
   "todos/deleteTodo",
   async (payload, thunkAPI) => {
     try {
-      await axios.delete(`http://localhost:3001/todos/${payload}`);
+      await axios.delete(`/todos/${payload}`);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
