@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.91e453dc.css","mappings":"AAAA,gBAGI,aAAc,CADd,cAAe,CADf,kBAGJ","sources":["components/header/header.css"],"sourcesContent":[".navigate:hover {\n    transition: all, 0.3s;\n    cursor: pointer;\n    color: #1a73e8;\n}"],"names":[],"sourceRoot":""}
