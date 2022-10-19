@@ -1,7 +1,33 @@
-import React from "react"
+import React, { useEffect } from "react"
 import styled from "styled-components"
 import { FaTrashAlt } from "react-icons/fa"
+import { useDispatch, useSelector } from "react-redux"
+import { __deleteTodo, __getTodos } from "../../redux/modules/todosSlice"
+import { useNavigate } from "react-router-dom"
 const TodosList = () => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const {isLoading, todos, error} = useSelector((state) => state.todos)
+    
+    const deleteTodoHandler = (todoID) => {
+        console.log(todoID)
+        dispatch(__deleteTodo(todoID))
+    }
+
+
+
+    useEffect(()=> {
+        dispatch(__getTodos())
+    },[dispatch])
+
+    if (isLoading) {
+        return <div>로딩 중 ....</div>
+    }
+
+    if (error) {
+        return <div>{error.message}</div>
+    }
 
     return (
         <TodosListCtn>
@@ -9,20 +35,22 @@ const TodosList = () => {
                 Todo List
             </HomeMenuName>
             <TodosListBox>
-                <ListCtn>
-                    <ListCtn2>
-                        <ListTitle>{"가장 최신 게시글이 위로 올라갑니다."}</ListTitle>
-                        <ListNickname>@{"홍길동"}</ListNickname>
-                    </ListCtn2>
-                    <FaTrashAlt size="24" color="tomato" />
-                </ListCtn>
-                <ListCtn>
-                    <ListCtn2>
-                        <ListTitle>{"id: 1 글이라고 가정합니다."}</ListTitle>
-                        <ListNickname>@{"todos"}</ListNickname>
-                    </ListCtn2>
-                    <FaTrashAlt size="24" color="tomato" />
-                </ListCtn>
+                { (todos.length === 0) ? "TODO LIST가 비어있습니다." :
+                    todos.slice(0).reverse().map((todo)=> {
+                        return (
+                            <ListCtn key={todo.id}>
+                                <ListCtn2 onClick={()=>navigate(`/todos/${todo.id}`)}>
+                                    <ListTitle>{todo.title}</ListTitle>
+                                    <ListNickname>@{todo.nickname}</ListNickname>
+                                </ListCtn2>
+                                <FaTrashAlt 
+                                    onClick={()=>deleteTodoHandler(todo.id)}
+                                    size="24" 
+                                    color="tomato" />
+                            </ListCtn>
+                        )
+                    })
+                }
             </TodosListBox>
         </TodosListCtn>
     )
@@ -33,6 +61,7 @@ const TodosListCtn = styled.div`
     flex-direction: column;
     gap: 20px;
     padding: 20px;
+    height: 100%;
     box-sizing: border-box;
 `
 const HomeMenuName = styled.h2`
@@ -52,13 +81,18 @@ const ListCtn = styled.div`
     border-radius: 10px;
     padding: 20px;
     display: flex;
+    gap: 20px;
     justify-content: space-between;
     align-items: center;
 `
 const ListCtn2 = styled.div`
     display: flex;
+    width: 100%;
     flex-direction: column;
     gap: 5px;
+    &:hover {
+        cursor: pointer;
+    }
 `
 const ListTitle = styled.h3`
     font-size: 20px;
@@ -68,5 +102,6 @@ const ListNickname = styled.p`
     font-size: 12px;
     color: gray;
 `
+
 
 export default TodosList

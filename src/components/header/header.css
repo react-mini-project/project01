@@ -1,0 +1,5 @@
+.navigate:hover {
+    transition: all, 0.3s;
+    cursor: pointer;
+    color: #1a73e8;
+}

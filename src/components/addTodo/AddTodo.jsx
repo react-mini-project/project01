@@ -1,14 +1,49 @@
-import React from "react"
+import React, { useEffect } from "react"
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components"
+import useInput from "../../hooks/useInput"
+import { __addTodo } from "../../redux/modules/todosSlice";
 
 const AddTodo = () => {
+    const navigate = useNavigate()
+    const [title, onChangeTitleHandler, resetTitle] = useInput();
+    const [nickname, onChangeNicknameHandler, resetNickname] = useInput();
+    const [content, onChangeContentHandler, resetContent] = useInput();
 
+    const dispatch = useDispatch()    
+
+    const onSubmitHandler = (e) => {
+        e.preventDefault();
+        if (nickname.trim() === "" || title.trim() === "" || content.trim() === "") {
+            return;
+        }
+        dispatch(__addTodo({nickname, title, content}))
+        
+        if (window.confirm(`TODO LIST가 추가되었습니다.\n리스트에서 확인 하시겠습니까?`)) {
+            navigate("/todos")
+        } else {
+            resetTitle()
+            resetNickname()
+            resetContent()
+        }
+    }
+
+    useEffect(()=>{
+        
+    },[])
+    
+    // console.log(title, nickname, content)
     return (
-        <AddTodoCtn>
+        <AddTodoCtn onSubmit={onSubmitHandler}>
             <AddTodoCtnArea>
                 <AddTodoBox>
                     <AddTodoTitle>작성자</AddTodoTitle>
                     <AddTodoInput
+                        type="text"
+                        name="nickname"
+                        value={nickname}
+                        onChange={onChangeNicknameHandler}
                         placeholder="작성자의 이름을 입력해주세요. (5자 이내)"
                         maxLength="5"
                         required
@@ -17,6 +52,10 @@ const AddTodo = () => {
                 <AddTodoBox>
                     <AddTodoTitle>제목</AddTodoTitle>
                     <AddTodoInput
+                        type="text"
+                        name="title"
+                        value={title}
+                        onChange={onChangeTitleHandler}
                         placeholder="제목을 입력해주세요. (50자 이내)"
                         maxLength="50"
                         required
@@ -25,6 +64,10 @@ const AddTodo = () => {
                 <AddTodoBox>
                     <AddTodoTitle>내용</AddTodoTitle>
                     <AddTodoTextarea
+                        type="text"
+                        name="content"
+                        value={content}
+                        onChange={onChangeContentHandler}
                         placeholder="내용을 입력해주세요. (200자 이내)"
                         maxLength="200"
                         rows="10"
@@ -40,13 +83,18 @@ const AddTodo = () => {
 const AddTodoCtn = styled.form`
     margin: 20px auto 0 auto;
     max-width: 500px;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 66px);
     box-sizing: border-box;
     padding: 20px;
     display: flex;
     gap: 20px;
     flex-direction: column;
     justify-content: space-between;
+    overflow: hidden;
+    @media screen and (max-height: 632px) {
+        height: auto;
+        overflow: visible;
+    }
 `
 const AddTodoCtnArea = styled.div`
     display: flex;

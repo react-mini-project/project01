@@ -1,19 +1,20 @@
 import React from "react"
 import styled from "styled-components"
 import { FaAngleRight } from "react-icons/fa"
+import { useNavigate } from "react-router-dom"
 
 const HomeMenu = () => {
-
+    const navigate = useNavigate()
     return (
         <HomeMenuCtn>
             <HomeMenuName>
                 무엇을 할까요?
             </HomeMenuName>
-            <HomeMenuBtn>
+            <HomeMenuBtn onClick={()=>navigate("/todos/add")}>
                 <HomeMenuTitle>할일 기록하기</HomeMenuTitle>
                 <FaAngleRight size="30" color="#1a73e8" />
             </HomeMenuBtn>
-            <HomeMenuBtn>
+            <HomeMenuBtn onClick={()=>navigate("/todos")}>
                 <HomeMenuTitle>TODO LIST</HomeMenuTitle>
                 <FaAngleRight size="30" color="#1a73e8" />
             </HomeMenuBtn>
@@ -34,13 +35,14 @@ const HomeMenuName = styled.h2`
     font-weight: 400;
     margin-bottom: 20px;
 `
-const HomeMenuBtn = styled.div`
+const HomeMenuBtn = styled.button`
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 40px 20px;
     height: 60px;
     display: flex;
     justify-content: space-between;
+    background-color: white;
     align-items: center;
     &:hover  {
         cursor: pointer;
