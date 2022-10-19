@@ -12,7 +12,7 @@ export const __getComments = createAsyncThunk(
   "comments/getComments",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get("https://shrouded-badlands-79466.herokuapp.com/comments");
+      const data = await axios.get("/comments");
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
