@@ -6,12 +6,14 @@ import { useParams } from "react-router-dom"
 import { __deleteComment, __editComment, __getComments } from "../../redux/modules/commentsSlice"
 
 
-const Comment = ({comment}) => {
+const Comment = ({ comment }) => {
     const dispatch = useDispatch()
-    const {id} = useParams()
+    const { id } = useParams()
     const thisID = comment.id
     const [isEdit, setIsEdit] = useState(false)
     const [editComment, setEditComment] = useState(comment.comment)
+
+
 
     const onChangeEditComment = (e) => {
         setEditComment(e.target.value)
@@ -22,7 +24,7 @@ const Comment = ({comment}) => {
         setIsEdit(!isEdit)
     }
     const onCompleteEditComment = (id, comment) => {
-        dispatch(__editComment({id, comment}))
+        dispatch(__editComment({ id, comment }))
         setIsEdit(!isEdit)
     }
 
@@ -35,9 +37,9 @@ const Comment = ({comment}) => {
     }, [])
 
     return (
-         <>
+        <>
             {
-                (isEdit) ?  (
+                (isEdit) ? (
                     <CommentBox key={comment.id}>
                         <CommentViewBox>
                             <EditCommentInput
@@ -50,13 +52,13 @@ const Comment = ({comment}) => {
                         <CommentEditBox>
                             <CommentIcon
                                 color="#1a73e8"
-                                onClick={()=>onCompleteEditComment(comment.id, editComment)}
+                                onClick={() => onCompleteEditComment(comment.id, editComment)}
                             >
                                 수정
                             </CommentIcon>
                             <CommentIcon
                                 color="tomato"
-                                onClick={()=>isEditChange()}
+                                onClick={() => isEditChange()}
                             >
                                 취소
                             </CommentIcon>
@@ -71,7 +73,7 @@ const Comment = ({comment}) => {
                         <CommentEditBox>
                             <CommentIcon
                                 color="#1a73e8"
-                                onClick={()=>isEditChange()}
+                                onClick={() => isEditChange()}
                             >
                                 <VscEdit
                                     size={20}
@@ -79,7 +81,7 @@ const Comment = ({comment}) => {
                                 />
                             </CommentIcon>
                             <CommentIcon
-                                onClick={()=>onDeleteComment(comment.id)}
+                                onClick={() => onDeleteComment(comment.id)}
                                 color="tomato"
                             >
                                 <VscTrash

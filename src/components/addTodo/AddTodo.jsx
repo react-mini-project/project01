@@ -11,15 +11,15 @@ const AddTodo = () => {
     const [nickname, onChangeNicknameHandler, resetNickname] = useInput();
     const [content, onChangeContentHandler, resetContent] = useInput();
 
-    const dispatch = useDispatch()    
+    const dispatch = useDispatch()
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
         if (nickname.trim() === "" || title.trim() === "" || content.trim() === "") {
             return;
         }
-        dispatch(__addTodo({nickname, title, content}))
-        
+        dispatch(__addTodo({ nickname, title, content }))
+
         if (window.confirm(`TODO LIST가 추가되었습니다.\n리스트에서 확인 하시겠습니까?`)) {
             navigate("/todos")
         } else {
@@ -29,10 +29,9 @@ const AddTodo = () => {
         }
     }
 
-    useEffect(()=>{
-        
-    },[])
-    
+    useEffect(() => {
+    }, [])
+
     // console.log(title, nickname, content)
     return (
         <AddTodoCtn onSubmit={onSubmitHandler}>

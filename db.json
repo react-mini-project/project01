@@ -7,42 +7,24 @@
       "id": 1
     },
     {
-      "nickname": "dsdsf",
-      "title": "asdfasdasfsdafsad",
-      "content": "",
-      "id": 2
-    },
-    {
-      "nickname": "dsasd",
-      "title": "asdfasdsaxczxvc",
-      "content": "111assdf",
+      "nickname": "4231",
+      "title": "13123123234",
+      "content": "1234",
       "id": 3
     }
   ],
   "comments": [
     {
       "todoId": "1",
-      "nickname": "asdfs",
-      "comment": "asdfasdfsdf",
-      "id": 3
+      "nickname": "123",
+      "comment": "123",
+      "id": 1
     },
     {
-      "todoId": "1",
-      "nickname": "asdfs",
-      "comment": "asdfasdfsdf",
-      "id": 4
-    },
-    {
-      "todoId": "3",
-      "nickname": "dasf",
-      "comment": "asfdasdf",
-      "id": 5
-    },
-    {
-      "todoId": "3",
-      "nickname": "asdfa",
-      "comment": "asdfsadfsfsdaf",
-      "id": 6
+      "todoId": "2",
+      "nickname": "31",
+      "comment": "3111",
+      "id": 2
     }
   ]
 }
