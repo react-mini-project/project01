@@ -12,7 +12,7 @@ export const __getComments = createAsyncThunk(
   "comments/getComments",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get("http://localhost:3001/comments");
+      const data = await axios.get("https://shrouded-badlands-79466.herokuapp.com/comments/");
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -24,7 +24,7 @@ export const __addComment = createAsyncThunk(
   "comments/addComment",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.post("http://localhost:3001/comments", payload);
+      const data = await axios.post("https://shrouded-badlands-79466.herokuapp.com/comments", payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -36,7 +36,7 @@ export const __deleteComment = createAsyncThunk(
   "comments/deleteComment",
   async (payload, thunkAPI) => {
     try {
-      await axios.delete(`http://localhost:3001/comments/${payload}`);
+      await axios.delete(`https://shrouded-badlands-79466.herokuapp.com/comments/${payload}`);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -48,7 +48,7 @@ export const __editComment = createAsyncThunk(
   "comments/editComment",
   async (payload, thunkAPI) => {
     try {
-      await axios.patch(`http://localhost:3001/comments/${payload.id}`, payload);
+      await axios.patch(`https://shrouded-badlands-79466.herokuapp.com/comments/${payload.id}`, payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

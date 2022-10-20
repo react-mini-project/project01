@@ -2,16 +2,16 @@ import { VscEdit, VscTrash } from "react-icons/vsc"
 import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import styled from "styled-components"
-import { useParams } from "react-router-dom"
 import { __deleteComment, __editComment, __getComments } from "../../redux/modules/commentsSlice"
 
 
 const Comment = ({ comment }) => {
     const dispatch = useDispatch()
-    const { id } = useParams()
-    const thisID = comment.id
+
+
     const [isEdit, setIsEdit] = useState(false)
     const [editComment, setEditComment] = useState(comment.comment)
+    const [prevComment, setPrevComment] = useState(editComment)
 
 
 
@@ -20,7 +20,8 @@ const Comment = ({ comment }) => {
     }
 
     const isEditChange = () => {
-        setEditComment(comment.comment)
+        isEdit ? setEditComment(prevComment) : setEditComment(editComment)
+        setPrevComment(editComment)
         setIsEdit(!isEdit)
     }
     const onCompleteEditComment = (id, comment) => {

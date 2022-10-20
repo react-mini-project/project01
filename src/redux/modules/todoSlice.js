@@ -9,26 +9,32 @@ const initialState = {
 };
 
 export const __getTodo = createAsyncThunk(
-  "todo/getTodo",
-  async (payload, thunkAPI) => {
-    try {
-      const data = await axios.get(`http://localhost:3001/todos/${payload}`);
-      return thunkAPI.fulfillWithValue(data.data);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+
+    "todo/getTodo",
+    async (payload, thunkAPI) => {
+        try {
+            const data = await axios.get(`https://shrouded-badlands-79466.herokuapp.com/todos/${payload}`);
+            return thunkAPI.fulfillWithValue(data.data);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+
     }
-  }
+  
 );
 export const __patchTodo = createAsyncThunk(
-  "todos/patchTodo",
-  async (payload, thunkAPI) => {
-    try {
-      await axios.patch(`http://localhost:3001/todos/${payload.id}`, payload);
-      return thunkAPI.fulfillWithValue(payload);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+
+    "todos/patchTodo",
+    async (payload, thunkAPI) => {
+      try {
+        await axios.patch(`https://shrouded-badlands-79466.herokuapp.com/todos/${payload.id}`, payload);
+        return thunkAPI.fulfillWithValue(payload);
+      } catch (error) {
+        return thunkAPI.rejectWithValue(error);
+      }
+
     }
-  }
+  
 );
 
 export const todoSlice = createSlice({
