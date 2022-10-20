@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from "react-redux"
 import { useParams, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { __getTodo, __patchTodo } from "../../redux/modules/todoSlice"
+import { __getTodos } from "../../redux/modules/todosSlice"
 
 const DetailTodo = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const { todo } = useSelector((state) => state.todo)
+    const { todos } = useSelector((state) => state.todos)
 
     const [editContent, setEditContent] = useState()
     const onChangeContent = (e) => {
@@ -19,46 +20,83 @@ const DetailTodo = () => {
 
     const { id } = useParams()
 
-    const onEditTodoHandler = (id, content) => {
-        (isTodoEdit) ? dispatch(__patchTodo({id, content})) : setEditContent(todo.content)
+
+    const NextHandler = (todo) => {
+        const CurIndex = todos.indexOf(todo)
+        if (CurIndex == todos.length - 1) {
+            alert("마지막 게시글입니다.")
+        } else {
+            const NextId = todos[CurIndex + 1].id
+            navigate(`/todos/${NextId}`)
+        }
+    }
+
+
+    const PrevHandler = (todo) => {
+        const CurIndex = todos.indexOf(todo)
+        if (CurIndex == 0) {
+            alert("첫 게시글입니다.")
+        } else {
+            const NextId = todos[CurIndex - 1].id
+            navigate(`/todos/${NextId}`)
+        }
+    }
+
+
+    const onEditTodoHandler = (id, content, todo) => {
+        (isTodoEdit) ? dispatch(__patchTodo({ id, content })) : setEditContent(todo.content)
         setIsTodoEdit(!isTodoEdit)
     }
+
     useEffect(() => {
-        dispatch(__getTodo(id))
+        dispatch(__getTodos())
     }, [])
 
+
+
     return (
-        <DetailTodoCtn>
-            <DetailTop>
-                <DetailHeader>
-                    <DetailTodoID>ID: {id}</DetailTodoID>
-                    <BackBtn onClick={() => navigate("/todos")}>이전으로</BackBtn>
-                </DetailHeader>
-                <DetailBody>
-                    <DetailBody2>
-                        <DetailNickname>@{todo.nickname}</DetailNickname>
-                        <DetailTitle>{todo.title}</DetailTitle>
-                    </DetailBody2>
-                    {isTodoEdit ? (
-                        <DetailContentEdit
-                            value={editContent}
-                            onChange={onChangeContent}
-                            rows="4"
-                        />
-                    ) : (
-                        <DetailContent>
-                            {todo.content}
-                        </DetailContent>
-                    )}
-                </DetailBody>
-            </DetailTop>
-            <DetailTodoEdit
-                onClick={() => onEditTodoHandler(id, editContent)}
-            >
-                {isTodoEdit ? "저장하기" : "수정하기"}
-            </DetailTodoEdit>
-            
-        </DetailTodoCtn>
+        <>
+            {
+                todos.map((todo) => {
+                    if (todo.id == id)
+                        return (
+                            <DetailTodoCtn key={id}>
+                                <DetailTop>
+                                    <DetailHeader>
+                                        <DetailTodoID>ID: {id}</DetailTodoID>
+                                        <BackBtn onClick={() => navigate("/todos")}>이전으로</BackBtn>
+                                    </DetailHeader>
+                                    <DetailBody>
+                                        <DetailBody2>
+                                            <DetailNickname>@{todo.nickname}</DetailNickname>
+                                            <DetailTitle>{todo.title}</DetailTitle>
+                                        </DetailBody2>
+                                        {isTodoEdit ? (
+                                            <DetailContentEdit
+                                                value={editContent}
+                                                onChange={onChangeContent}
+                                                rows="4"
+                                            />
+                                        ) : (
+                                            <DetailContent>
+                                                {todo.content}
+                                            </DetailContent>
+                                        )}
+                                    </DetailBody>
+                                </DetailTop>
+                                <DetailTodoEdit
+                                    onClick={() => onEditTodoHandler(id, editContent, todo)}
+                                >
+                                    {isTodoEdit ? "저장하기" : "수정하기"}
+                                </DetailTodoEdit>
+
+                                <DetailTodoEdit onClick={() => { NextHandler(todo) }} >다음 게시글</DetailTodoEdit>
+                                <DetailTodoEdit onClick={() => { PrevHandler(todo) }} >이전 게시글</DetailTodoEdit>
+                            </DetailTodoCtn>
+                        )
+                })
+            }</>
+
     )
 }
 
@@ -118,7 +156,7 @@ const DetailContentEdit = styled.textarea`
     padding: 5px 10px;
 `
 const DetailTodoEdit = styled.button`
-    margin: 0 auto;
+    
     min-width: 200px;
     max-width: 300px;
     padding: 6px 12px;
@@ -133,6 +171,7 @@ const DetailTodoEdit = styled.button`
         color: white;
     }
 `
+
 
 // 댓글 영역
 
