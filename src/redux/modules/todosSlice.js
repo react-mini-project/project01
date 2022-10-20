@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+axios.defaults.timeout = 3000;
 
 const initialState = {
   todos: [],
@@ -44,14 +45,13 @@ export const __deleteTodo = createAsyncThunk(
   }
 );
 
-
 export const todosSlice = createSlice({
   name: "todos",
   initialState,
   reducers: {
     clearTodo: (state, action) => {
-      state.isSuccess = true
-    }
+      state.isSuccess = true;
+    },
   },
   extraReducers: {
     [__getTodos.pending]: (state) => {
@@ -72,7 +72,7 @@ export const todosSlice = createSlice({
     [__addTodo.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isSuccess = true;
-      state.todos = [...state.todos, action.payload]
+      state.todos = [...state.todos, action.payload];
     },
     [__addTodo.rejected]: (state, action) => {
       state.isLoading = false;
@@ -83,14 +83,12 @@ export const todosSlice = createSlice({
     },
     [__deleteTodo.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.todos = state.todos.filter((todo) => todo.id !== action.payload
-      )
+      state.todos = state.todos.filter((todo) => todo.id !== action.payload);
     },
     [__deleteTodo.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
-    
   },
 });
 

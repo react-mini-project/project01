@@ -8,8 +8,8 @@ const TodosList = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const {isLoading, todos, error} = useSelector((state) => state.todos)
-    
+    const { isLoading, todos, error } = useSelector((state) => state.todos)
+
     const deleteTodoHandler = (todoID) => {
         console.log(todoID)
         dispatch(__deleteTodo(todoID))
@@ -17,12 +17,13 @@ const TodosList = () => {
 
 
 
-    useEffect(()=> {
+    useEffect(() =>
         dispatch(__getTodos())
-    },[dispatch])
+        , [dispatch])
 
     if (isLoading) {
         return <div>로딩 중 ....</div>
+
     }
 
     if (error) {
@@ -35,17 +36,17 @@ const TodosList = () => {
                 Todo List
             </HomeMenuName>
             <TodosListBox>
-                { (todos.length === 0) ? "TODO LIST가 비어있습니다." :
-                    todos.slice(0).reverse().map((todo)=> {
+                {(todos.length === 0) ? "TODO LIST가 비어있습니다." :
+                    todos.slice(0).reverse().map((todo) => {
                         return (
                             <ListCtn key={todo.id}>
-                                <ListCtn2 onClick={()=>navigate(`/todos/${todo.id}`)}>
+                                <ListCtn2 onClick={() => navigate(`/todos/${todo.id}`)}>
                                     <ListTitle>{todo.title}</ListTitle>
                                     <ListNickname>@{todo.nickname}</ListNickname>
                                 </ListCtn2>
-                                <FaTrashAlt 
-                                    onClick={()=>deleteTodoHandler(todo.id)}
-                                    size="24" 
+                                <FaTrashAlt
+                                    onClick={() => deleteTodoHandler(todo.id)}
+                                    size="24"
                                     color="tomato" />
                             </ListCtn>
                         )
@@ -54,6 +55,8 @@ const TodosList = () => {
             </TodosListBox>
         </TodosListCtn>
     )
+
+
 }
 
 const TodosListCtn = styled.div`
