@@ -4,6 +4,7 @@ import { FaTrashAlt } from "react-icons/fa"
 import { useDispatch, useSelector } from "react-redux"
 import { __deleteTodo, __getTodos } from "../../redux/modules/todosSlice"
 import { useNavigate } from "react-router-dom"
+import Loading from "../Feature/Loading"
 const TodosList = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -15,14 +16,12 @@ const TodosList = () => {
         dispatch(__deleteTodo(todoID))
     }
 
-
-
     useEffect(()=> {
         dispatch(__getTodos())
     },[dispatch])
 
     if (isLoading) {
-        return <div>로딩 중 ....</div>
+        return <Loading />
     }
 
     if (error) {
